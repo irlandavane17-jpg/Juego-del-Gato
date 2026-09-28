@@ -1,0 +1,230 @@
+:root {
+    color-scheme: light;
+    --fondo: #f4f6f1;
+    --papel: #ffffff;
+    --tinta: #202a26;
+    --suave: #68756f;
+    --linea: #dce4de;
+    --verde: #28745b;
+    --verde-claro: #e1f1e8;
+    --coral: #d4654c;
+    --sombra: 0 22px 60px rgba(31, 53, 43, 0.09);
+}
+
+* {
+    box-sizing: border-box;
+}
+
+body {
+    min-height: 100vh;
+    margin: 0;
+    padding: 32px 18px;
+    display: grid;
+    place-items: center;
+    color: var(--tinta);
+    background-color: var(--fondo);
+    background-image: radial-gradient(#d9e3da 0.8px, transparent 0.8px);
+    background-size: 20px 20px;
+    font-family: "Trebuchet MS", "Segoe UI", sans-serif;
+}
+
+button {
+    font: inherit;
+}
+
+.juego {
+    width: min(100%, 490px);
+    padding: clamp(24px, 6vw, 42px);
+    border: 1px solid rgba(220, 228, 222, 0.9);
+    border-radius: 18px;
+    background: var(--papel);
+    box-shadow: var(--sombra);
+    animation: aparecer 450ms ease-out both;
+}
+
+.encabezado {
+    margin-bottom: 28px;
+    text-align: center;
+}
+
+.etiqueta {
+    margin: 0 0 9px;
+    color: var(--verde);
+    font-size: 0.76rem;
+    font-weight: 800;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+}
+
+h1 {
+    margin: 0;
+    font-family: Georgia, "Times New Roman", serif;
+    font-size: clamp(2rem, 8vw, 2.7rem);
+    font-weight: 700;
+    line-height: 1.05;
+}
+
+.estado {
+    min-height: 28px;
+    margin: 12px 0 0;
+    color: var(--suave);
+    font-size: 1rem;
+    font-weight: 600;
+}
+
+.estado strong {
+    color: var(--verde);
+}
+
+.estado .marca-o {
+    color: var(--coral);
+}
+
+.marcador {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    margin-bottom: 22px;
+    border: 1px solid var(--linea);
+    border-radius: 12px;
+    overflow: hidden;
+}
+
+.dato {
+    padding: 12px 6px 11px;
+    text-align: center;
+}
+
+.dato + .dato {
+    border-left: 1px solid var(--linea);
+}
+
+.dato span {
+    display: block;
+    color: var(--suave);
+    font-size: 0.73rem;
+    font-weight: 700;
+}
+
+.dato strong {
+    display: block;
+    margin-top: 4px;
+    font-size: 1.35rem;
+    line-height: 1;
+}
+
+.tablero {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 9px;
+    width: 100%;
+    aspect-ratio: 1;
+}
+
+.casilla {
+    display: grid;
+    place-items: center;
+    min-width: 0;
+    padding: 0;
+    border: 1px solid var(--linea);
+    border-radius: 12px;
+    color: var(--tinta);
+    background: #fbfcfa;
+    cursor: pointer;
+    font-family: Georgia, "Times New Roman", serif;
+    font-size: clamp(3.2rem, 18vw, 5.3rem);
+    font-weight: 700;
+    line-height: 1;
+    transition: background-color 150ms ease, border-color 150ms ease, transform 150ms ease;
+}
+
+.casilla:not(:disabled):hover {
+    border-color: #8eb7a2;
+    background: #f1f7f2;
+    transform: translateY(-2px);
+}
+
+.casilla:focus-visible,
+.accion:focus-visible {
+    outline: 3px solid #8eb7a2;
+    outline-offset: 3px;
+}
+
+.casilla[data-marca="X"] {
+    color: var(--verde);
+}
+
+.casilla[data-marca="O"] {
+    color: var(--coral);
+}
+
+.casilla.ganadora {
+    border-color: #9dc9ad;
+    background: var(--verde-claro);
+    animation: resaltar 350ms ease-out both;
+}
+
+.casilla:disabled {
+    cursor: default;
+}
+
+.acciones {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+    margin-top: 20px;
+}
+
+.accion {
+    min-height: 46px;
+    padding: 10px 12px;
+    border: 1px solid var(--linea);
+    border-radius: 9px;
+    color: var(--tinta);
+    background: var(--papel);
+    cursor: pointer;
+    font-size: 0.9rem;
+    font-weight: 700;
+    transition: background-color 150ms ease, border-color 150ms ease;
+}
+
+.accion:hover {
+    border-color: #9eb6a7;
+    background: #f5f8f5;
+}
+
+.accion-primaria {
+    border-color: var(--verde);
+    color: #ffffff;
+    background: var(--verde);
+}
+
+.accion-primaria:hover {
+    border-color: #1e604a;
+    background: #1e604a;
+}
+
+@keyframes aparecer {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes resaltar {
+    from { transform: scale(0.94); }
+    to { transform: scale(1); }
+}
+
+@media (max-width: 380px) {
+    body { padding: 16px 12px; }
+    .juego { padding: 22px 18px; }
+    .acciones { grid-template-columns: 1fr; }
+    .accion { min-height: 44px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        scroll-behavior: auto !important;
+        transition-duration: 0.01ms !important;
+    }
+}
